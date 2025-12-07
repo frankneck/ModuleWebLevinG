@@ -30,29 +30,28 @@
 <?php
 	require_once('db.php');
 
-	if (isset($_COOKIE['User'])){
+	if (isset($_COOKIE['User'])) {
 		header('Location: /profile.php');
 		exit;
 	}
 
 	$link = mysqli_connect('127.0.0.1', 'root', 'kali', 'first');
 
-	if (isset($_POST['submit'])){
+	if (isset($_POST['submit'])) {
 		$login = $_POST['login'];
-		$email = $_POST['email']
-		$pass = $_POST['password']
+		$email = $_POST['email'];
+		$pass = $_POST['password'];
 
-		if (!$login || !$pass || !$email)
-		{
-			die('input all parameters');
+		if (!$login || !$pass || !$email) {
+			die('Input all parameters');
 		}
 
-		$sql = "INSERT INTO users(username, email, pass) VALUES ('$login','$email', '$pass)";
+		$sql = "INSERT INTO users (username, email, pass) VALUES ('$login', '$email', '$pass')";
 
 		if (!mysqli_query($link, $sql)) {
 			echo "Error insert users";
 		} else {
-			header("Location /login.php");
+			header("Location: /login.php");
 			exit;
 		}
 	}
