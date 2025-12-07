@@ -31,7 +31,7 @@
 	require_once('db.php');
 
 	if (isset($_COOKIE['User'])){
-		header('Location: /profile.php')
+		header('Location: /profile.php');
 		exit;
 	}
 
@@ -47,7 +47,7 @@
 			die('input all parameters');
 		}
 
-		$sql = "INSERT INTO users(username, email, pass) VALUES ('$login','$email', '$password')";
+		$sql = "INSERT INTO users(username, email, pass) VALUES ('$login','$email', '$pass)";
 
 		if (!mysqli_query($link, $sql)) {
 			echo "Error insert users";
