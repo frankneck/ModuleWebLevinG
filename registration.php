@@ -1,3 +1,41 @@
+<?php
+	// Включаем отображение ошибок — только для разработки
+	ini_set('display_errors', 1);
+	ini_set('display_startup_errors', 1);
+	error_reporting(E_ALL);
+
+	// Подключаем базу
+	require_once('db.php');
+
+	// Если пользователь уже авторизован
+	if (isset($_COOKIE['User'])) {
+		header('Location: /profile.php');
+		exit;
+	}
+
+	// Обработка формы
+	if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+		$login = trim($_POST['login']);
+		$email = trim($_POST['email']);
+		$pass  = trim($_POST['password']);
+
+		if (!$login || !$email || !$pass) {
+			die("Input all parameters");
+		}
+
+		// Подготовленный запрос — безопасно
+		$stmt = $link->prepare("INSERT INTO users (username, email, pass) VALUES (?, ?, ?)");
+		$stmt->bind_param("sss", $login, $email, $pass);
+
+		if (!$stmt->execute()) {
+			die("Error inserting user: " . $stmt->error);
+		} else {
+			header("Location: /login.php");
+			exit;
+		}
+	}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -29,38 +67,3 @@
     </div>
 </body>
 </html>
-
-<?php
-
-	ini_set('display_errors', 1);
-	ini_set('display_startup_errors', 1);
-	error_reporting(E_ALL);
-
-	require_once('db.php');
-
-	if (isset($_COOKIE['User'])) {
-		header('Location: /profile.php');
-		exit;
-	}
-
-	$link = mysqli_connect('127.0.0.1', 'root', 'kali', 'first');
-
-	if (isset($_POST['submit'])) {
-		$login = $_POST['login'];
-		$email = $_POST['email'];
-		$pass = $_POST['password'];
-
-		if (!$login || !$pass || !$email) {
-			die('Input all parameters');
-		}
-
-		$sql = "INSERT INTO users (username, email, pass) VALUES ('$login', '$email', '$pass')";
-
-		if (!mysqli_query($link, $sql)) {
-			echo "Error insert users";
-		} else {
-			header("Location: /login.php");
-			exit;
-		}
-	}
-?>
