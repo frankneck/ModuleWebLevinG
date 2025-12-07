@@ -31,37 +31,31 @@
 </html>
 
 <?php
+	require_once('db.php');
 
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
+	if (isset($_COOKIE['User'])) {
+		header('Location: /profile.php');
+		exit;
+	}
 
+	$link = mysqli_connect('127.0.0.1', 'root', 'kali', 'first');
 
-require_once('db.php');
+	if (isset($_POST['submit'])) {
+		$login = $_POST['login'];
+		$email = $_POST['email'];
+		$pass = $_POST['password'];
 
-if (isset($_COOKIE['User'])) {
-    header('Location: /profile.php');
-    exit;
-}
+		if (!$login || !$pass || !$email) {
+			die('Input all parameters');
+		}
 
-$link = mysqli_connect('127.0.0.1', 'root', 'kali', 'first');
+		$sql = "INSERT INTO users (username, email, pass) VALUES ('$login', '$email', '$pass')";
 
-if (isset($_POST['submit'])) {
-    $login = $_POST['login'];
-    $email = $_POST['email'];
-    $pass = $_POST['password'];
-
-    if (!$login || !$pass || !$email) {
-        die('Input all parameters');
-    }
-
-    $sql = "INSERT INTO users (username, email, pass) VALUES ('$login', '$email', '$pass')";
-
-    if (!mysqli_query($link, $sql)) {
-        echo "Error insert users";
-    } else {
-        header("Location: /login.php");
-        exit;
-    }
-}
+		if (!mysqli_query($link, $sql)) {
+			echo "Error insert users";
+		} else {
+			header("Location: /login.php");
+			exit;
+		}
+	}
 ?>
