@@ -1,4 +1,4 @@
-<php?
+<?php
 	$server="127.0.0.1"
 	$user="root"
 	$password="kali"
@@ -38,5 +38,4 @@
 	}
 	
 	mysqli_close($link);
-?php>
-
+?>

@@ -13,11 +13,13 @@
 	<div class="container d-flex justify-content-center align-items-center vh-100">
 		<div class="row">
 			<div class="col12 text-center">
-				<h1 class="mb-4">Login in!</h1>
-				<div class="d-flex justify-content-center gap-3">
-					<a href="/registration.html" class="btn btn-primary">Registraion</a>
-					<a href="/login.html" class="btn btn-primary">Login</a>
-				</div>
+				<h1 class="mb-4">Login by Levin Grigory</h1>
+                <form action="/registration.php" method="POST" class="d-flex flex-column gap-3">
+                    <input type="email" name="email" placeholder="email" class="form-contol-hacker-input"> 
+                    <input type="password" name="password" placeholder="password" class="form-contol-hacker-input">
+                    <button class="btn btn-primary" type="submit" name="submit">Login</button>
+                    <p class="mt-3">Don't have an account?<a href="/registration.php">Registration</a></p>
+                </form>
 			</div>
 		</div>
 	</div>
