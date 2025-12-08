@@ -1,7 +1,7 @@
 <?php
 	$server = "localhost";
 	$user = "root";
-	$password = "kali";
+	$password = "12345";
 	$dbName = "first";
 
 	// 1. Подключение к MySQL без выбора базы

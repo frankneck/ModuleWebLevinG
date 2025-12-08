@@ -14,10 +14,23 @@
 		<div class="row">
 			<div class="col12 text-center">
 				<h1 class="mb-4">Login in!</h1>
+				<?php if(!isset($_COOKIE['User'])){?>
 				<div class="d-flex justify-content-center gap-3">
 					<a href="/registration.php" class="btn btn-primary">Registraion</a>
 					<a href="/login.php" class="btn btn-primary">Login</a>
 				</div>
+				<?php } else {
+					$link = mysqli_connect('localhost','root','12345','first');
+					$sql = 'SELECT * FROM posts';
+					$result = mysqli_query($link,$sql);
+					if (mysqli_num_rows($result)> 0){
+						while ($posts = mysqli_fetch_array($result)) {
+							echo'<a href=/posts.php?id='.$posts['id'].'>'.$posts['title'].'</a><br>';
+						}
+					} else {
+						echo 'No posts';
+					}
+				}?>
 			</div>
 		</div>
 	</div>
